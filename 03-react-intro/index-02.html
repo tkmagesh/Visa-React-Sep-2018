@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React Intro</title>
+	<script src="react.development.js"></script>
+	<script src="react-dom.development.js"></script>
+	<script>
+		window.addEventListener('DOMContentLoaded', init);
+		function init(){
+			var btnRender = document.getElementById('btnRender');
+			btnRender.addEventListener('click', onBtnRenderClick);
+		}
+		var clickCount = 0;
+		function onBtnRenderClick(){
+			++clickCount;
+			document.getElementById('clickCount').innerHTML = clickCount;
+
+			var viewEle = React.createElement('div', null, 
+				React.createElement('h1', null, 'Welcome to React.js - ' + clickCount),
+				React.createElement('hr', null, null),
+				React.createElement('p', null, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+				React.createElement('p', null, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat nonproident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+				React.createElement('div', null, 
+					React.createElement('h3', null, 'Advantages'),
+					React.createElement('ol', null, 
+						React.createElement('li', null, 'Simplicity'),
+						React.createElement('li', null, 'Efficient'),
+					)
+				)
+			);
+			
+			ReactDOM.render(viewEle, document.getElementById('root'));
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="Render" id="btnRender">
+	<h3 id="clickCount">0</h3>
+	<div id="root"></div>
+</body>
+</html>
