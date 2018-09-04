@@ -7,6 +7,13 @@
 	<script src="react-dom.development.js"></script>
 	<script src="babel.min.js"></script>
 	<script type="text/babel">
+		class ProductsCount extends React.Component{
+			render(){
+				return(
+					<h3>{this.props.count}</h3>
+				)
+			}
+		}
 		class ProductsList extends React.Component{
 			state = { products : [] };
 			productName = '';
@@ -33,7 +40,12 @@
 			}
 		}
 
-		ReactDOM.render(<ProductsList />,
+		ReactDOM.render(
+				<div>
+					<ProductsCount count="0"/>
+					<ProductsList />
+				</div>
+			,
 			document.getElementById('root'));
 	</script>
 </head>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Products</title>
+	<script src="react.development.js"></script>
+	<script src="react-dom.development.js"></script>
+	<script src="babel.min.js"></script>
+	<script type="text/babel">
+
+		class EventEmitter{
+			_listeners = [];
+			subscribe(listenerFn){
+				this._listeners.push(listenerFn);
+			}
+			triggerChange(){
+				this._listeners.forEach(listenerFn => listenerFn());
+			}
+		}
+
+		class ProductsModel extends EventEmitter{
+			_products = [];
+
+			addNew(product){
+				this._products.push(product);
+				this.triggerChange();
+			}
+			getAll(){
+				return [...this._products];
+			}
+		}
+
+		class ProductsCount extends React.Component{
+			render(){
+				return(
+					<h3>{this.props.count}</h3>
+				)
+			}
+		}
+		class ProductsList extends React.Component{
+			
+			productName = '';
+
+			onAddNewClick = () => {
+				this.props.model.addNew(this.productName);
+			}
+
+			render(){
+				let { model } = this.props,
+					products = model. getAll(),
+					productElems = products.map((product, index) => (<li key={index}>{product}</li>));
+				return(
+					<div>
+						<label>Product Name :</label>
+						<input type="text" onChange={evt => this.productName = evt.target.value} />
+						<input type="button" value="Add New" onClick={this.onAddNewClick}/>
+						<ol>
+							{productElems}
+						</ol>
+					</div>
+				)
+			}
+		}
+
+		class ProductsApp extends React.Component{
+			render(){
+				let { model } = this.props,
+					products = model.getAll();
+				return (
+					<div>
+						<ProductsCount count={products.length}/>
+						<ProductsList model={model}/>
+					</div>
+				)
+			}
+		}
+
+		let model = new ProductsModel();
+		function renderApp(){
+			ReactDOM.render(
+					<ProductsApp model={model} />
+				,
+				document.getElementById('root'));
+		}
+		renderApp();
+		model.subscribe(renderApp);
+
+	</script>
+</head>
+<body>
+	<h1>Products</h1>
+	<hr/>
+	<div id="root">
+		
+	</div>
+</body>
+</html>
