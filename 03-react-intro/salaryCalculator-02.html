@@ -87,13 +87,11 @@
 					data = model.toJSON();
 				return(
 					<div>
-						<SalaryCalculatorInput labelName="Basic :" onValueChange={ value => model.set('basic', value)}/>
-						<SalaryCalculatorInput labelName="HRA :" onValueChange={ value => model.set('hra', value)}/>
-						<SalaryCalculatorInput labelName="DA :" onValueChange={ value => model.set('da', value)}/>
-						<div className="field">
-							<label htmlFor="">Tax :</label>
-							<input type="range" onChange={ evt => model.set('tax', evt.target.valueAsNumber) } min="0" max="30"/>
-						</div>
+						<SalaryCalculatorInput type="number" labelName="Basic :" onValueChange={ value => model.set('basic', value)}/>
+						<SalaryCalculatorInput type="number" labelName="HRA :" onValueChange={ value => model.set('hra', value)}/>
+						<SalaryCalculatorInput type="number" labelName="DA :" onValueChange={ value => model.set('da', value)}/>
+						<SalaryCalculatorInput type="range" labelName="Tax :" onValueChange={ value => model.set('da', value)} min="0" max="30"/>
+						
 						<div className="field">
 							<input type="button" value="Calculate" onClick={ evt => model.calculate()} />
 						</div>
@@ -108,11 +106,11 @@
 				this.props.onValueChange(evt.target.valueAsNumber);
 			}
 			render(){
-				let { labelName } = this.props;
+				let { labelName, type, onValueChange, ...attrs } = this.props;
 				return(
 					<div className="field">
 						<label htmlFor="">{labelName}</label>
-						<input type="number" onChange={ this.onInputChange } />
+						<input type={type} onChange={ this.onInputChange } {...attrs} />
 					</div>
 				)
 			}
