@@ -106,6 +106,35 @@
 			}
 		}
 
+		{/*class BugStats extends React.Component{
+			render(){
+				let bugs = this.props.bugs,
+					closedCount = bugs.reduce(function(result, bug){
+						return bug.isClosed ? ++result : result;
+					}, 0);
+				return(
+					<section className="stats">
+						<span className="closed">{closedCount}</span>
+						<span> / </span>
+						<span>{bugs.length}</span>
+					</section>
+				)
+			}
+		}*/}
+
+		let BugStats = ({ bugs }) => {
+			let	closedCount = bugs.reduce(function(result, bug){
+					return bug.isClosed ? ++result : result;
+				}, 0);
+			return(
+				<section className="stats">
+					<span className="closed">{closedCount}</span>
+					<span> / </span>
+					<span>{bugs.length}</span>
+				</section>
+			)
+		};
+
 		class BugTracker extends React.Component{
 			newBugName = '';
 
@@ -118,14 +147,12 @@
 			}
 
 			onRemoveClosedClick = () => {
-				this.props.collection.removeClosed();s
+				this.props.collection.removeClosed();
 			}
 
 			render(){
-				let bugs = this.props.collection.getAll(),
-					closedCount = bugs.reduce(function(result, bug){
-						return bug.isClosed ? ++result : result;
-					}, 0);	
+				let bugs = this.props.collection.getAll();
+						
 				/*let bugItems = [];
 				for(let index=0, count=bugs.length; index < count; index++){
 					let bugItem = (
@@ -151,11 +178,10 @@
 					
 				return(
 					<div>
-						<section className="stats">
-							<span className="closed">{closedCount}</span>
-							<span> / </span>
-							<span>{bugs.length}</span>
-						</section>
+						{/* BugStats */}
+						
+						<BugStats bugs={bugs} />
+						{/* BugSort */}
 						<section className="sort">
 							<label htmlFor="">Order By :</label>
 							<select>
@@ -165,16 +191,20 @@
 							<label htmlFor="">Descending :</label>
 							<input type="checkbox" />
 						</section>
+						
+						{/* BugEdit */}
 						<section className="edit">
 							<label htmlFor="">Bug Name :</label>
 							<input type="text" onChange={evt => this.newBugName = evt.target.value}/>
 							<input type="button" value="Add New" onClick={this.onAddNewClick}/>
 						</section>
+
+						{/*BugList*/}
 						<section className="list">
 							<ol>
 								{bugItems}
 							</ol>
-							<input type="button" value="Remove Closed" />
+							<input type="button" value="Remove Closed" onClick={this.onRemoveClosedClick}/>
 						</section>
 					</div>
 				)
