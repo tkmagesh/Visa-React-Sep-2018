@@ -79,6 +79,13 @@
 				bug.isClosed = !bug.isClosed;
 				this.triggerChange();
 			}
+
+			removeClosed(){
+				this._list = this._list.filter(function(bug){
+					return !bug.isClosed;
+				});
+				this.triggerChange();
+			}
 		}
 
 		class BugItem extends React.Component{
@@ -110,8 +117,15 @@
 				this.props.collection.toggle(bugToToggle);
 			}
 
+			onRemoveClosedClick = () => {
+				this.props.collection.removeClosed();s
+			}
+
 			render(){
-				let bugs = this.props.collection.getAll();
+				let bugs = this.props.collection.getAll(),
+					closedCount = bugs.reduce(function(result, bug){
+						return bug.isClosed ? ++result : result;
+					}, 0);	
 				/*let bugItems = [];
 				for(let index=0, count=bugs.length; index < count; index++){
 					let bugItem = (
@@ -138,7 +152,7 @@
 				return(
 					<div>
 						<section className="stats">
-							<span className="closed">1</span>
+							<span className="closed">{closedCount}</span>
 							<span> / </span>
 							<span>{bugs.length}</span>
 						</section>
