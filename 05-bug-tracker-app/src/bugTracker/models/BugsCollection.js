@@ -1,15 +1,31 @@
 import EventEmitter from './EventEmitter';
+import bugService from '../services/bugService';
 
 class BugsCollection extends EventEmitter{
 	_list = [];
 
+	constructor(){
+		super();
+		bugService
+			.getAll()
+			.then(bugs => {
+				this.bugs = bugs;
+				this.triggerChange();
+			});
+	}
+
 	addNew(bugName){
-		let newBug = {
+		let newBugData = {
+			id : 0,
 			name : bugName,
 			isClosed : false
 		};
-		this._list.push(newBug);
-		this.triggerChange();
+		bugService
+			.save(newBugData)
+			.then(newBug => {
+				this._list.push(newBug);
+				this.triggerChange();		
+			});
 	}
 
 	getAll(){
@@ -18,10 +34,19 @@ class BugsCollection extends EventEmitter{
 
 	toggle(bug){
 		bug.isClosed = !bug.isClosed;
+		bugService.save(bug);
 		this.triggerChange();
+			
 	}
 
 	removeClosed(){
+		this
+			._list
+			.forEach(bug => {
+				if (bug.isClosed){
+					bugService.remove(bug);
+				}
+			});
 		this._list = this._list.filter(function(bug){
 			return !bug.isClosed;
 		});
