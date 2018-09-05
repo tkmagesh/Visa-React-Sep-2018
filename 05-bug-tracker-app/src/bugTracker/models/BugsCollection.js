@@ -4,12 +4,12 @@ import bugService from '../services/bugService';
 class BugsCollection extends EventEmitter{
 	_list = [];
 
-	constructor(){
-		super();
+
+	load(){
 		bugService
 			.getAll()
 			.then(bugs => {
-				this.bugs = bugs;
+				this._list = bugs;
 				this.triggerChange();
 			});
 	}
@@ -34,8 +34,12 @@ class BugsCollection extends EventEmitter{
 
 	toggle(bug){
 		bug.isClosed = !bug.isClosed;
-		bugService.save(bug);
-		this.triggerChange();
+		bugService
+			.save(bug)
+			.then(() => {
+				this.triggerChange();
+			});
+		
 			
 	}
 

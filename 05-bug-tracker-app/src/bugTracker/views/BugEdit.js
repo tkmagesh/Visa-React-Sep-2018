@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class BugEdit extends React.Component{
+class BugEdit extends Component{
 	newBugName = '';
 	onAddNewClick = () => {
 		this.props.onAddNewBug(this.newBugName);

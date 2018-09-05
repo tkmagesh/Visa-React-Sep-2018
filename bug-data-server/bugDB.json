@@ -1,16 +1,6 @@
 {
   "bugs": [
     {
-      "id": 1,
-      "name": "Bug - 0",
-      "isClosed": false
-    },
-    {
-      "id": 2,
-      "name": "Bug - 1",
-      "isClosed": false
-    },
-    {
       "id": 3,
       "name": "Bug - 2",
       "isClosed": false
@@ -28,6 +18,14 @@
     {
       "id": 6,
       "name": "Bug - 5",
+      "isClosed": false
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8,
+      "name": "sadfdas",
       "isClosed": false
     }
   ],

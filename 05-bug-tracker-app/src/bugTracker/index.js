@@ -5,6 +5,9 @@ import BugItem from './views/BugItem';
 
 class BugTracker extends Component{
 	
+	componentDidMount(){
+		this.props.collection.load();
+	}
 
 	newBugAdded = (newBugName) => {
 		this.props.collection.addNew(newBugName);
